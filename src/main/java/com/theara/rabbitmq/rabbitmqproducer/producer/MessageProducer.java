@@ -31,4 +31,8 @@ public class MessageProducer {
 
     }
 
+    public void sendErrorMessage(String message) {
+        rabbitTemplate.convertAndSend(RabbitMqConfig.ERROR_ROUTING_KEY, message);
+    }
+
 }

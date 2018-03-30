@@ -31,4 +31,11 @@ public class ProducerController {
         return "Message \"" + message + "\" was sent to RabbitMQ";
     }
 
+    @GetMapping("/error")
+    public String sendError(@RequestParam String message) {
+        messageProducer.sendErrorMessage(message);
+
+        return message;
+    }
+
 }

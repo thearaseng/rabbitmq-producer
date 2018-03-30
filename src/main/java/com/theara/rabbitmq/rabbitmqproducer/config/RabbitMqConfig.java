@@ -4,6 +4,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,20 +17,30 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMqConfig {
 
     public static final String ROUTING_KEY = "my.queue.key";
+    public static final String ERROR_ROUTING_KEY = "server1.app1.module1.error";
 
     @Bean
-    Queue queue() {
+    public Queue queue() {
         return new Queue(ROUTING_KEY, true);
     }
 
+    @Bean("errorQueue")
+    public Queue errorQueue() {
+        return new Queue(ERROR_ROUTING_KEY, true);
+    }
+
     @Bean
-    TopicExchange topicExchange() {
+    public TopicExchange topicExchange() {
         return new TopicExchange("my_queue_exchange");
     }
 
     @Bean
-    Binding binding(Queue queue, TopicExchange topicExchange) {
+    public Binding binding(Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue).to(topicExchange).with(ROUTING_KEY);
+    }
+
+    @Bean Binding errorBinding(@Qualifier("errorQueue") Queue queue, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queue).to(topicExchange).with(ERROR_ROUTING_KEY);
     }
 
 }
