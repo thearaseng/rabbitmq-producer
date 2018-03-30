@@ -39,7 +39,8 @@ public class RabbitMqConfig {
         return BindingBuilder.bind(queue).to(topicExchange).with(ROUTING_KEY);
     }
 
-    @Bean Binding errorBinding(@Qualifier("errorQueue") Queue queue, TopicExchange topicExchange) {
+    @Bean
+    public Binding errorBinding(@Qualifier("errorQueue") Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue).to(topicExchange).with(ERROR_ROUTING_KEY);
     }
 
