@@ -1,4 +1,4 @@
-package com.theara.rabbitmq.rabbitmqproducer.service;
+package com.theara.rabbitmq.rabbitmqproducer.producer;
 
 import com.theara.rabbitmq.rabbitmqproducer.config.RabbitMqConfig;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
