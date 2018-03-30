@@ -23,8 +23,8 @@ public class ProducerController {
         this.messageProducer = messageProducer;
     }
 
-    @GetMapping
-    public String produce(@RequestParam String message) {
+    @GetMapping("/info")
+    public String sendInfo(@RequestParam String message) {
 
         messageProducer.sendMessage(message);
 

@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-    public static final String ROUTING_KEY = "my.queue.key";
+    public static final String ROUTING_KEY = "server1.app1.module1.info";
     public static final String ERROR_ROUTING_KEY = "server1.app1.module1.error";
 
-    @Bean
+    @Bean("infoQueue")
     public Queue queue() {
         return new Queue(ROUTING_KEY, true);
     }
@@ -35,7 +35,7 @@ public class RabbitMqConfig {
     }
 
     @Bean
-    public Binding binding(Queue queue, TopicExchange topicExchange) {
+    public Binding binding(@Qualifier("infoQueue") Queue queue, TopicExchange topicExchange) {
         return BindingBuilder.bind(queue).to(topicExchange).with(ROUTING_KEY);
     }
 
