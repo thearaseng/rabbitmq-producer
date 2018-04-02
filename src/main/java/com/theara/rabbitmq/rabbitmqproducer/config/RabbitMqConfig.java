@@ -16,12 +16,13 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
-    public static final String ROUTING_KEY = "server1.app1.module1.info";
+    public static final String TOPIC_EXCHANGE_KEY = "my_queue_exchange";
+    public static final String INFO_ROUTING_KEY = "server1.app1.module1.info";
     public static final String ERROR_ROUTING_KEY = "server1.app1.module1.error";
 
     @Bean("infoQueue")
     public Queue queue() {
-        return new Queue(ROUTING_KEY, true);
+        return new Queue(INFO_ROUTING_KEY, true);
     }
 
     @Bean("errorQueue")
@@ -31,12 +32,12 @@ public class RabbitMqConfig {
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange("my_queue_exchange");
+        return new TopicExchange(TOPIC_EXCHANGE_KEY);
     }
 
     @Bean
     public Binding binding(@Qualifier("infoQueue") Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(ROUTING_KEY);
+        return BindingBuilder.bind(queue).to(topicExchange).with(INFO_ROUTING_KEY);
     }
 
     @Bean

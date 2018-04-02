@@ -25,14 +25,14 @@ public class MessageProducer {
     public void sendMessage(String message) {
 
         System.out.println(new Date());
-        rabbitTemplate.convertAndSend(RabbitMqConfig.ROUTING_KEY, message);
+        rabbitTemplate.convertAndSend(RabbitMqConfig.TOPIC_EXCHANGE_KEY, RabbitMqConfig.INFO_ROUTING_KEY, message);
         System.out.println("Is listener returned ::: " + rabbitTemplate.isReturnListener());
         System.out.println(new Date());
 
     }
 
     public void sendErrorMessage(String message) {
-        rabbitTemplate.convertAndSend(RabbitMqConfig.ERROR_ROUTING_KEY, message);
+        rabbitTemplate.convertAndSend(RabbitMqConfig.TOPIC_EXCHANGE_KEY, RabbitMqConfig.ERROR_ROUTING_KEY, message);
     }
 
 }
